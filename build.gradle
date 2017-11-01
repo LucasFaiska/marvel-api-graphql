@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'marvel-api-graphql'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+publicKey = "3178e20fab3bd91fdc47872159cbcc87"
+privateKey = "3bf9f79f0326ce76bd2a853a5ab114d8e19dac52"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework:spring-web")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+    testCompile("junit:junit")
+}
