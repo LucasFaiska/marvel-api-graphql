@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Thumbnail {
     private String path;
     private String extension;
-    
+
     public String getPath() {
         return path;
     }
