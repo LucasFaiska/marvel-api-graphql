@@ -1,4 +1,4 @@
-package com.lfaiska.marvel.graphql.data.entities;
+package com.lfaiska.marvel.graphql.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

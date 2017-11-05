@@ -91,9 +91,3 @@ fabric.properties
 hs_err_pid*
 
 # End of https://www.gitignore.io/api/java,intellij
-.gitignore
-.gradle/
-.idea/
-out/
-src/main/java/com/lfaiska/marvel/graphql/domain/
-src/test/
