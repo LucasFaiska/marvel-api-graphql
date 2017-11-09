@@ -1,5 +1,6 @@
 package com.lfaiska.marvel.graphql;
 
+import com.sun.jndi.toolkit.url.Uri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

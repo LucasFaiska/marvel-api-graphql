@@ -4,16 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lfaiska.marvel.graphql.entity.Character;
 import com.lfaiska.marvel.graphql.entity.Response;
+import org.eclipse.jetty.http.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CharacterService {
+public class CharacterService extends MarvelService {
 
     private final RestTemplate appRestClient;
 
@@ -22,11 +25,19 @@ public class CharacterService {
         this.appRestClient = appRestClient;
     }
 
-    public List<Character> getCharacteres(int limit, int offset) {
+    public List<Character> getCharacteres() {
         ObjectMapper mapper = new ObjectMapper();
-
         List<Character> characterList = new ArrayList<>();
-        Response response = appRestClient.getForObject("http://gateway.marvel.com/v1/public/characters?ts=123456789&apikey=3178e20fab3bd91fdc47872159cbcc87&hash=5292eb891193e819f2f0184c3a3f40c9", Response.class);
+
+        URI targetUrl = targetUrlBuilder.path("/v1/public/characters")
+                .queryParam("ts", "123456789")
+                .queryParam("apikey", "3178e20fab3bd91fdc47872159cbcc87")
+                .queryParam("hash", "5292eb891193e819f2f0184c3a3f40c9")
+                .build()
+                .encode()
+                .toUri();
+
+        Response response = appRestClient.getForObject(targetUrl, Response.class);
 
         if (response.getCode().equals("200")) {
             response.getData().getResults().forEach(item -> {
