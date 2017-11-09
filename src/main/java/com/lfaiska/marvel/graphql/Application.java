@@ -24,7 +24,7 @@ public class Application {
 				new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
 
 		restClient.setInterceptors(Collections.singletonList((request, body, execution) -> {
-		    log.info("Interceptando Request");
+		    log.info("Acessando: " + request.getURI().toString());
 			return execution.execute(request, body);
 		}));
 
