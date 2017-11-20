@@ -22,6 +22,6 @@ public class CharacterController {
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public @ResponseBody
     List<Character> getAllCharacters(Model model){
-        return characterService.getCharacteres();
+        return characterService.getCharacteres(100, 0);
     }
 }

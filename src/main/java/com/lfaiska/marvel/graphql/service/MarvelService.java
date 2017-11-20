@@ -1,6 +1,7 @@
 package com.lfaiska.marvel.graphql.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.xml.bind.DatatypeConverter;
@@ -8,6 +9,7 @@ import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MarvelService {
     protected UriComponentsBuilder targetUrlBuilder;
@@ -22,6 +24,18 @@ public class MarvelService {
 
     public MarvelService() {
         targetUrlBuilder = UriComponentsBuilder.fromUriString("http://gateway.marvel.com/");
+    }
+
+    protected URI getTargetUrl(String path, MultiValueMap<String, String> parameters) {
+        String ts = String.valueOf(new Date().getTime());
+        return targetUrlBuilder.path(path)
+                .queryParam("ts", ts)
+                .queryParam("apikey", publicKey)
+                .queryParam("hash", getHash(ts))
+                .queryParams(parameters)
+                .build()
+                .encode()
+                .toUri();
     }
 
     protected URI getTargetUrl(String path) {
