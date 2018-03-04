@@ -12,7 +12,8 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class MarvelService {
-    protected UriComponentsBuilder targetUrlBuilder;
+    @Value("${marvel.base_url}")
+    protected String baseUrl;
 
     @Value("${marvel.keys.public}")
     protected String publicKey;
@@ -22,11 +23,10 @@ public class MarvelService {
 
     protected MessageDigest md;
 
-    public MarvelService() {
-        targetUrlBuilder = UriComponentsBuilder.fromUriString("http://gateway.marvel.com/");
-    }
+    public MarvelService() {}
 
     protected URI getTargetUrl(String path, MultiValueMap<String, String> parameters) {
+        UriComponentsBuilder targetUrlBuilder = UriComponentsBuilder.fromUriString(baseUrl);
         String ts = String.valueOf(new Date().getTime());
         return targetUrlBuilder.path(path)
                 .queryParam("ts", ts)
@@ -39,6 +39,7 @@ public class MarvelService {
     }
 
     protected URI getTargetUrl(String path) {
+        UriComponentsBuilder targetUrlBuilder = UriComponentsBuilder.fromUriString(baseUrl);
         String ts = String.valueOf(new Date().getTime());
         return targetUrlBuilder.path(path)
                 .queryParam("ts", ts)

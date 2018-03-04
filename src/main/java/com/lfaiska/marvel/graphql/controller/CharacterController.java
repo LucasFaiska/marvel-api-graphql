@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/characters")
@@ -22,6 +24,11 @@ public class CharacterController {
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public @ResponseBody
     List<Character> getAllCharacters(Model model){
-        return characterService.getCharacteres(100, 0);
+        List<Character> characters = new ArrayList<>();
+        int total = 1500;
+        int offset = 100;
+        IntStream list = IntStream.rangeClosed(0, total/offset);
+        list.parallel().forEach(i -> characters.addAll(characterService.getCharacteres(100, offset*i)));
+        return characters;
     }
 }
