@@ -1,19 +1,33 @@
 package com.lfaiska.marvel.graphql.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Document(collection = "character")
 public class Character {
-    private long id;
+    @Id
+    private String id;
     private String name;
     private String description;
     private Thumbnail thumbnail;
 
-    public long getId() {
+    public Character() {
+    }
+
+    public Character(String id, String name, String description, Thumbnail thumbnail) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.thumbnail = thumbnail;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

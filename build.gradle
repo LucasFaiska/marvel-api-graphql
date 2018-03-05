@@ -28,10 +28,8 @@ task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework:spring-web")
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.data:spring-data-mongodb:2.0.4.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("com.fasterxml.jackson.core:jackson-databind")
     testCompile("junit:junit")
 }
