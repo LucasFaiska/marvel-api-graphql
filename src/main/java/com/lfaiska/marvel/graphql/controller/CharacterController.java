@@ -20,15 +20,15 @@ import java.util.stream.IntStream;
 public class CharacterController {
 
     @Autowired
-    private CharacterService characterService;
+    private CharacterService service;
 
     @Autowired
-    private CharacterRepository characterRepository;
+    private CharacterRepository repository;
 
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public @ResponseBody
     List<Character> getAllCharacters(Model model){
-        List<Character> characters = characterRepository.findAll();
+        List<Character> characters = repository.findAll();
         //@TODO find a way to search this value in API
         if (characters.size() < 1491) {
             characters = fetchAllCharactersFromMarvelApi();
@@ -38,10 +38,12 @@ public class CharacterController {
 
     private List<Character> fetchAllCharactersFromMarvelApi() {
         List<Character> characters = new ArrayList<>();
+        //@TODO find a way to search this value in API
         int total = 1500;
         int offset = 100;
         IntStream list = IntStream.rangeClosed(0, total/offset);
-        list.forEach(i -> characters.addAll(characterService.getCharacteres(100, offset*i)));
+        list.forEach(i -> characters.addAll(service.getCharacteres(100, offset*i)));
+        repository.save(characters);
         return characters;
     }
 }
