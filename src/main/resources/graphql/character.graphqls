@@ -1,0 +1,11 @@
+type Character {
+    id: ID!
+    name: String!
+    description: String!
+    thumbnail: Thumbnail!
+}
+
+type Query {
+    findAllCharacters: [Character]!
+    countCharacters: Long!
+}

@@ -1,0 +1,4 @@
+type Thumbnail {
+    path: String!
+    extension: String!
+}

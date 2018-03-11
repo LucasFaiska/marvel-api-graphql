@@ -13,12 +13,23 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 public class CharacterService {
 
     @Autowired
     private MarvelClient client;
+
+    public List<Character> getAllCharacters() {
+        List<Character> characters = new ArrayList<>();
+        //@TODO find a way to search this value in API
+        int total = 1500;
+        int offset = 100;
+        IntStream list = IntStream.rangeClosed(0, total/offset);
+        list.forEach(i -> characters.addAll(getCharacteres(100, offset*i)));
+        return characters;
+    }
 
     public List<Character> getCharacteres(int limit, int offset) {
         ObjectMapper mapper = new ObjectMapper();
@@ -46,5 +57,4 @@ public class CharacterService {
         parameters.add("offset", String.valueOf(offset));
         return parameters;
     }
-
 }
