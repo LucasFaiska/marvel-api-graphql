@@ -41,7 +41,8 @@ public class Application {
 		return restClient;
 	}
 
-    @Bean public GraphQLErrorHandler errorHandler() {
+    @Bean
+    public GraphQLErrorHandler errorHandler() {
 	    return new GraphQLErrorHandler() {
 	        @Override
             public List<GraphQLError> processErrors(List<GraphQLError> errors) {
